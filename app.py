@@ -1,0 +1,23 @@
+import streamlit as st
+import pandas as pd
+import pickle
+
+model = pickle.load(open("model.pkl","rb"))
+
+st.title("House Price Prediction App")
+
+lot_area = st.number_input("Lot Area")
+overall_qual = st.number_input("Overall Quality")
+year_built = st.number_input("Year Built")
+basement = st.number_input("Total Basement SF")
+garage = st.number_input("Garage Cars")
+
+house_age = 2025 - year_built
+
+if st.button("Predict Price"):
+
+    data = [[lot_area, overall_qual, year_built, basement, garage, house_age]]
+
+    prediction = model.predict(data)
+
+    st.success(f"Predicted House Price: {prediction[0]}")
